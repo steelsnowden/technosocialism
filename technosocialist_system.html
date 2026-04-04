@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Technosocialist Economic System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink: #1a1a1a;
+    --ink-muted: #4a4a4a;
+    --ink-faint: #888;
+    --rule: #d8d4cc;
+    --bg: #f5f3ef;
+    --surface: #ffffff;
+    --accent: #1d3a2f;
+    --accent-light: #e8f0ec;
+    --accent-mid: #2d5a45;
+    --tag-bg: #e8f0ec;
+    --tag-fg: #1d3a2f;
+    --red: #8b2c1a;
+    --amber: #7a4f00;
+    --amber-bg: #fdf3dc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.8;
+    font-size: 16px;
+    padding: 0;
+  }
+
+  /* Cover */
+  .cover {
+    background: var(--accent);
+    color: #fff;
+    padding: 80px 60px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -120px; left: 40px;
+    width: 500px; height: 500px;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .cover-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
+  }
+  .cover h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: #fff;
+    max-width: 700px;
+    margin-bottom: 32px;
+  }
+  .cover-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+  .cover-meta {
+    margin-top: 48px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+  }
+  .cover-meta-item strong {
+    display: block;
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    margin-bottom: 4px;
+    letter-spacing: 0;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+    padding: 48px 60px;
+  }
+  .toc-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 24px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px 32px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .toc-item:hover { color: var(--accent); }
+  .toc-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    min-width: 24px;
+  }
+
+  /* Main layout */
+  .main { max-width: 900px; margin: 0 auto; padding: 0 60px 80px; }
+
+  /* Section */
+  .section {
+    margin-top: 72px;
+    scroll-margin-top: 24px;
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-top: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+
+  /* Subsection */
+  .sub {
+    margin-top: 40px;
+  }
+  .sub h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 14px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Prose */
+  p { margin-bottom: 16px; color: var(--ink-muted); line-height: 1.85; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); font-weight: 600; }
+
+  /* Pull quote */
+  .pull {
+    border-left: 3px solid var(--accent);
+    padding: 16px 24px;
+    margin: 28px 0;
+    background: var(--accent-light);
+    border-radius: 0 6px 6px 0;
+  }
+  .pull p {
+    font-size: 15px;
+    color: var(--accent);
+    font-style: italic;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Warning box */
+  .warn {
+    border: 1px solid #d4a843;
+    background: var(--amber-bg);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 24px 0;
+  }
+  .warn-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .warn p { color: var(--amber); font-size: 14px; margin: 0; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; margin: 24px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--ink);
+    font-weight: 400;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-muted);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { color: var(--ink); font-weight: 500; }
+
+  /* Pill tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0; }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+  .tag.red { background: #fdecea; color: var(--red); }
+  .tag.amber { background: var(--amber-bg); color: var(--amber); }
+
+  /* Layer cards */
+  .layers { display: flex; flex-direction: column; gap: 1px; margin: 24px 0; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+  .layer {
+    background: var(--surface);
+    padding: 18px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .layer:last-child { border-bottom: none; }
+  .layer-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-light);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .layer-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .layer-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.6; }
+
+  /* Divider */
+  .divider {
+    margin: 56px 0 0;
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--accent);
+    color: rgba(255,255,255,0.5);
+    padding: 32px 60px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 640px) {
+    .cover { padding: 48px 24px 40px; }
+    .toc { padding: 32px 24px; }
+    .main { padding: 0 24px 60px; }
+    .footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">Theoretical Economic Framework · Technosocialism</div>
+  <h1>The AI-Directed Command Economy</h1>
+  <p class="cover-sub">A comprehensive framework for a centrally planned economy augmented by multi-agent artificial intelligence, real-time data infrastructure, and human superlanner oversight — designed to achieve full resource mobilisation, directed industrial development, and a path toward a stateless, classless society.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><strong>Core Mechanism</strong>MARL + LLM + Superplanners</div>
+    <div class="cover-meta-item"><strong>Planning Mode</strong>Real-time + Strategic</div>
+    <div class="cover-meta-item"><strong>Monetary System</strong>Dual-layer</div>
+    <div class="cover-meta-item"><strong>Transition</strong>Gradualist</div>
+    <div class="cover-meta-item"><strong>Property Model</strong>Social means, personal goods</div>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <div class="toc-label">Contents</div>
+  <div class="toc-grid">
+    <a class="toc-item" href="#s1"><span class="toc-num">01</span>Foundational Logic</a>
+    <a class="toc-item" href="#s2"><span class="toc-num">02</span>Budget & Allocation Power</a>
+    <a class="toc-item" href="#s3"><span class="toc-num">03</span>The Efficiency Problem & Solutions</a>
+    <a class="toc-item" href="#s4"><span class="toc-num">04</span>China's Hybrid Model</a>
+    <a class="toc-item" href="#s5"><span class="toc-num">05</span>The AI Core: MARL Architecture</a>
+    <a class="toc-item" href="#s6"><span class="toc-num">06</span>The LLM Interface Layer</a>
+    <a class="toc-item" href="#s7"><span class="toc-num">07</span>The Superplanners</a>
+    <a class="toc-item" href="#s8"><span class="toc-num">08</span>Data Infrastructure</a>
+    <a class="toc-item" href="#s9"><span class="toc-num">09</span>Tacit Knowledge Extraction</a>
+    <a class="toc-item" href="#s10"><span class="toc-num">10</span>The Opsroom</a>
+    <a class="toc-item" href="#s11"><span class="toc-num">11</span>Enforcement & Deterrence</a>
+    <a class="toc-item" href="#s12"><span class="toc-num">12</span>Monetary System</a>
+    <a class="toc-item" href="#s13"><span class="toc-num">13</span>Exchange Rate as a Tool</a>
+    <a class="toc-item" href="#s14"><span class="toc-num">14</span>Free Trade Zones</a>
+    <a class="toc-item" href="#s15"><span class="toc-num">15</span>Industrial Strategy</a>
+    <a class="toc-item" href="#s16"><span class="toc-num">16</span>Full Employment</a>
+    <a class="toc-item" href="#s17"><span class="toc-num">17</span>Real-time vs Five-Year Plans</a>
+    <a class="toc-item" href="#s18"><span class="toc-num">18</span>Transition Strategy</a>
+    <a class="toc-item" href="#s19"><span class="toc-num">19</span>Property & Class</a>
+    <a class="toc-item" href="#s20"><span class="toc-num">20</span>Honest Assessment</a>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- SECTION 1 -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>Foundational Logic: Why Command Economies Can Be Powerful</h2>
+  </div>
+  <p>In a market economy, the government can only allocate resources it collects through taxation — typically 20–30% of GDP. The remaining 70–80% moves through private decisions, price signals, and decentralised exchange. A command economy collapses this distinction: the state <strong>is</strong> the economy, directing production directly rather than taxing what private actors produce.</p>
+  <p>This gives a command economy a structural allocation advantage. Egypt's GDP of approximately $383 billion is notionally the ceiling of what could be directed. In practice, roughly 60–65% is the realistic discretionary ceiling after accounting for subsistence consumption and capital maintenance — still representing 2.3–2.5 times the allocable resources of a comparable mixed economy.</p>
+  <div class="pull"><p>"The biggest advantage is not the budget size — it's the ability to put any resources anywhere. The state doesn't need to convince private actors. It just directs."</p></div>
+  <p>The command economy's structural advantages include near-zero cyclical unemployment, no boom-bust cycles driven by private credit, and the ability to mobilise national resources toward defined goals at a speed that market economies cannot match. The Soviet Union went from agricultural backwardness to nuclear power in roughly three decades. These are not accidents — they are structural outputs of concentrated allocation authority.</p>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Budget & Allocation Power</h2>
+  </div>
+  <p>The core claim of this framework is that the notional "budget" of a command economy is structurally larger and more flexible than that of a comparable market economy. Consider two scenarios for Egypt:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Mixed Economy (current)</th><th>Command Economy (theoretical)</th></tr></thead>
+      <tbody>
+        <tr><td>Total GDP</td><td>~$383 billion</td><td>~$383 billion</td></tr>
+        <tr><td>State-allocable share</td><td>~26% (~$100B)</td><td>~60–65% (~$230–250B)</td></tr>
+        <tr><td>Education (example)</td><td>~$6–8B</td><td>~$96B at 25%</td></tr>
+        <tr><td>Healthcare (example)</td><td>~$5–6B</td><td>~$115B at 30%</td></tr>
+        <tr><td>Military (example)</td><td>~$5B</td><td>~$57B at 15%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The multiplier effect is real and significant. However, the productivity of that spending depends entirely on whether the allocation decisions are correct — which is where the AI and superlanner architecture becomes critical.</p>
+  <p>The Soviet system demonstrated both the power and the limits of this arrangement: rapid industrialisation was achievable, but chronic misallocation in consumer goods, agriculture, and anything requiring distributed preference signals led to persistent underperformance in those areas. The system designed here is specifically built to address those failure modes.</p>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>The Efficiency Problem: What Previous Systems Got Wrong</h2>
+  </div>
+  <p>The canonical critique of central planning is not that it fails at all things — the Soviet Union built nuclear weapons, went to space, and achieved world-class mathematics. It is that it systematically fails at a specific class of problems. Four distinct failure mechanisms have been identified:</p>
+
+  <div class="sub">
+    <h3>The Calculation Problem (Mises, 1920)</h3>
+    <p>Prices in a market are not merely numbers — they are compressed information signals encoding millions of local, tacit, and constantly-changing facts simultaneously. When the price of copper rises, it reflects a flooded mine in Chile, EV demand in China, a shipping bottleneck, and speculative positioning — without any central authority needing to know any of these facts explicitly. A planner setting prices manually is always working with stale information.</p>
+  </div>
+
+  <div class="sub">
+    <h3>The Principal-Agent Problem</h3>
+    <p>Factory managers who report honest capacity receive harder quotas. Workers with fixed wages have no marginal incentive to improve output. The entire Soviet system generated an informal economy of <em>tolkachi</em> — procurement fixers who operated outside the plan — because the formal system was systematically gamed. This isn't implementation failure; it's a structural consequence of severing individual rewards from individual marginal decisions.</p>
+  </div>
+
+  <div class="sub">
+    <h3>The Computational Problem</h3>
+    <p>The Soviet economy had approximately 12 million distinct product types. Optimal allocation requires solving a system of 12 million simultaneous non-linear equations with continuously updating parameters. Chile's Project Cybersyn (1971–73) attempted a real-time version of this and was limited to monitoring about 400 enterprises. The technical constraint was not the theory — it was the hardware. That constraint no longer exists in the same form.</p>
+  </div>
+
+  <div class="sub">
+    <h3>The Preference Revelation Problem</h3>
+    <p>Markets aggregate what people want through willingness-to-pay expressed in voluntary exchange. Planners need a substitute — surveys are gamed, historical consumption data is backward-looking, and expert determination is politically loaded. The result is that Soviet planning was consistently excellent at producing what planners valued (steel, electricity, military hardware) and chronically poor at what consumers valued (varied food, consumer electronics, shoes in the right sizes).</p>
+  </div>
+
+  <div class="warn">
+    <div class="warn-label">Critical insight</div>
+    <p>This system addresses the computational and preference revelation problems through AI and real-time data, mitigates the principal-agent problem through blockchain audit trails and anomaly detection, and partially addresses the calculation problem through satisficing rather than optimising. No system solves all four completely.</p>
+  </div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>China's Hybrid Model: The Closest Existing Analogue</h2>
+  </div>
+  <p>China's "socialist market economy" is the most important real-world precedent for this framework. Its formal name was coined by Jiang Zemin in 1992, built on Deng Xiaoping's pragmatic insight that planning and market mechanisms are both <em>tools</em> for liberating productivity — neither is inherently capitalist or socialist.</p>
+  <p>The system operates in three layers. <strong>Compulsory planning</strong> applies to state-owned enterprises in strategic sectors with mandated outcomes and state-supplied resources. <strong>Contractual planning</strong> sets objectives and negotiates with enterprises on how to meet them. <strong>Indicative planning</strong> — the most important layer — announces industrial targets and uses tax exemptions, subsidies, and preferential loans to induce private firms to meet those targets, preserving market computational function while bending its direction.</p>
+  <p>Under Xi Jinping this has evolved into what scholars call "party-state capitalism": state-owned companies receive more market discipline while private enterprises receive more party discipline, all in service of national strategic goals. China's solar panel industry — now over 80% of global manufacturing capacity — is the clearest empirical test: not a market outcome, not a Soviet command outcome, but the hybrid in action.</p>
+  <p>The system described in this document is more ambitious than China's hybrid: it seeks to close the information gap that China still leaves partially open by replacing indicative planning with AI-directed real-time allocation, while preserving the market's role at the consumer layer.</p>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>The AI Core: Multi-Agent Reinforcement Learning</h2>
+  </div>
+  <p>The central planning AI is <strong>not</strong> a large language model like GPT or Claude. LLMs predict text; they do not take actions in environments, learn from outcomes, or handle millions of simultaneous numerical variables in real time. The correct architecture is <strong>Multi-Agent Reinforcement Learning (MARL)</strong>.</p>
+  <p>MARL is a class of AI in which multiple autonomous agents each learn optimal policies through interaction with an environment, receiving rewards or penalties based on outcomes. Crucially, agents cooperate and negotiate with each other within defined rules. This is already deployed in real-world supply chains, logistics networks, and inventory systems at significant scale.</p>
+
+  <div class="sub">
+    <h3>Architecture: Three Layers</h3>
+    <div class="layers">
+      <div class="layer">
+        <div class="layer-num">1</div>
+        <div>
+          <div class="layer-title">Sector MARL Agents (the Planners)</div>
+          <div class="layer-desc">Each major sector — agriculture, energy, manufacturing, transport, healthcare, construction — has a dedicated RL agent. Each agent's job is to hit its satisficing targets while negotiating with other sector agents for shared resources. When steel and construction agents both want iron ore, they bid within rules set by superplanners. The system finds allocations satisfying all sector targets simultaneously, or flags conflicts to the Opsroom when it cannot. Agents are trained on historical data and continuously update from real-world outcomes.</div>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-num">2</div>
+        <div>
+          <div class="layer-title">Digital Twin Simulation Engine</div>
+          <div class="layer-desc">Before any MARL agent recommendation is authorised, it runs through a full economy simulation — a digital twin. "If we redirect 20% of steel to infrastructure this quarter, what happens to manufacturing output in six months?" The digital twin runs this forward in simulated time and displays projected consequences. Superplanners see outcomes before committing. The simulation improves continuously as real-world data provides feedback on its accuracy.</div>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-num">3</div>
+        <div>
+          <div class="layer-title">LLM Interface Layer</div>
+          <div class="layer-desc">An advanced language model (the equivalent of current frontier models) sits between the MARL system and the superplanners. It does not plan — it translates. It renders MARL outputs into human-readable explanations, answers superlanner questions in natural language ("why did the energy agent make this recommendation?"), and mediates conflicts between sector agents in terms humans can evaluate. This is where Grok 5 or an equivalent belongs — as the interpreter, not the engine.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Satisficing, Not Optimising</h3>
+    <p>The system does not attempt to find a single "best" allocation — an approach that requires a complete and correct objective function for everything humans value, which is philosophically unsolvable. Instead it uses <strong>satisficing</strong>: finding any allocation that meets bounded targets ("GDP up 70% by year-end, calories per capita above X, energy consumption below Y"). Multiple targets can coexist without being collapsed into a single utility function. When targets conflict, the system surfaces the conflict to the Opsroom for human resolution rather than making a silent value judgment.</p>
+  </div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>The LLM Interface Layer</h2>
+  </div>
+  <p>While MARL agents handle planning, an advanced language model serves as the human-facing interface of the entire system. Its three functions are distinct and important.</p>
+  <p><strong>Translation.</strong> MARL agents produce numerical recommendations, probability distributions, and resource allocation matrices. The LLM renders these into plain-language briefings for superplanners: "The agriculture agent recommends a 15% water allocation reduction in Region 4 due to these five factors, with 73% confidence that harvest targets will still be met."</p>
+  <p><strong>Interrogation interface.</strong> Superplanners can question the system conversationally. "Why did the energy agent prioritise coal this quarter over nuclear expansion?" The LLM traces the agent's reasoning chain and presents it accessibly, enabling effective human oversight of AI decisions.</p>
+  <p><strong>Conflict mediation.</strong> When sector agents compete for shared resources, the LLM frames the tradeoff in terms superplanners can evaluate: "Allocating the disputed steel to infrastructure delays military modernisation by an estimated 4 months. Allocating it to military delays three hospital completions by an estimated 7 months. Which is the priority?"</p>
+</div>
+
+<!-- SECTION 7 -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>The Superplanners</h2>
+  </div>
+  <p>Superplanners are the human decision layer — the people who set satisficing targets, review AI recommendations, resolve conflicts the system cannot resolve, and authorise resource reallocations. They replace Cybersyn's deliberate design for non-technical operators with a technically expert corps capable of interrogating AI outputs rigorously.</p>
+
+  <div class="sub">
+    <h3>How to Build the Corps</h3>
+    <p><strong>Recruitment from existing talent pools.</strong> The raw material exists across quantitative economics, operations research, central banking, industrial planning, military operational planning, and mathematics. The Tetlock Good Judgment Project profile is the target: high IQ, political knowledge, open-mindedness, pattern detection, cognitive flexibility, and willingness to update beliefs.</p>
+    <p><strong>Selection through forecasting tournaments.</strong> Candidates compete in structured prediction tournaments — economic forecasting, resource allocation scenarios, simulated crises — measured rigorously over years. Accuracy is tracked probabilistically. Only the top tier of consistent performers advance. This is the only empirically validated method for identifying genuine judgment rather than credentialed confidence.</p>
+    <p><strong>Specialised training institution.</strong> A dedicated school — combining elements of a war college, economics graduate school, and AI literacy programme — trains selected candidates specifically for this role. Curriculum: reading and interrogating MARL outputs, running digital twin simulations, identifying model drift from reality, making satisficing target decisions under uncertainty, and crisis Opsroom management.</p>
+  </div>
+
+  <div class="sub">
+    <h3>Scale</h3>
+    <p>An operational Opsroom requires 7 people at any given time (following Cybersyn's design principle that 7 is the maximum for effective collaborative decision-making). A rotation pool of 30–50 active superplanners across sector specialisms, supported by a deeper bench of 200–300 sector specialists feeding them analysis, is operationally sufficient for a medium-sized country.</p>
+  </div>
+</div>
+
+<!-- SECTION 8 -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2>Data Infrastructure</h2>
+  </div>
+  <p>The entire system is only as good as its data. Cybersyn used 500 telex machines. The modern equivalent is a comprehensive real-time nervous system spanning the entire economy.</p>
+
+  <div class="sub">
+    <h3>Data Collection Layer</h3>
+    <p>IoT sensors at every factory, farm, warehouse, port, and power station — reporting production, inventory, energy consumption, and labour in real time. Point-of-sale terminals replacing price signals: every transaction tells the system what people are actually consuming. Satellite and drone observation for agricultural output, logistics movement, and infrastructure status. Financial transaction monitoring between enterprises revealing real resource flows. Edge computing nodes at each data source pre-process and compress data locally before upstream transmission, preventing bandwidth saturation.</p>
+  </div>
+
+  <div class="sub">
+    <h3>Network Architecture</h3>
+    <p>High-speed fibre and 5G networks for real-time data flow. A blockchain or distributed ledger at the audit layer — a tamper-evident record of every report, making falsification forensically traceable. Multiple independent physical cable routes ensuring no single cut kills connectivity. The blockchain runs on its own distributed network separate from planning compute, so even if planning nodes are attacked, the economic record is preserved.</p>
+  </div>
+
+  <div class="sub">
+    <h3>Data Center Architecture</h3>
+    <p>5–8 geographically distributed compute nodes: losing any two keeps the system operational at reduced capacity. Underground hardened facilities with EMP shielding and independent power — the planning system cannot depend on the grid it is managing. Air-gapped emergency backup: a simplified degraded version running in isolation if the main network is compromised. Full 2N redundancy standards (two completely independent power and cooling systems each capable of handling full load) targeting 99.999% uptime — approximately 5 minutes of downtime per year.</p>
+  </div>
+</div>
+
+<!-- SECTION 9 -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2>Tacit Knowledge Extraction</h2>
+  </div>
+  <p>Approximately 80% of what experienced workers know is never formally documented. It exists as tacit knowledge: unwritten rules, contextual understanding, and hard-won expertise accumulated through years of problem-solving. The maintenance technician who knows exactly which sound indicates a failing bearing. The farmer who knows what the soil in his specific field does in a wet spring. This knowledge is what gives real production its texture beyond what any model captures.</p>
+  <p>Modern AI-powered tools now make systematic extraction of this knowledge tractable. Methods include structured knowledge elicitation sessions designed using cognitive science and education psychology, not mere interviews. Automated video and voice capture converting real-time expert demonstrations into structured standard operating procedures. Eye-tracking and visual attention analysis — capturing what experts look at and when reveals tacit knowledge they cannot consciously articulate, because the pattern is embedded in their perceptual behaviour rather than their declarative memory.</p>
+  <p>For this system, comprehensive pre-deployment extraction programmes run across every critical domain before the AI goes live. The farmer's knowledge about his soil enters the agricultural agent's domain-specific knowledge graph. The machinist's knowledge about his equipment enriches the manufacturing agent's model. Over time the AI's understanding of the specific economy it manages deepens in ways that a general model trained on global data never achieves.</p>
+  <div class="warn">
+    <div class="warn-label">Honest limit</div>
+    <p>Some tacit knowledge may be fundamentally unextractable — knowledge so embedded in embodied practice, sensory experience, and context that no elicitation process can fully surface it. This is an irreducible gap, managed by maintaining human expert oversight in domains where model confidence is low.</p>
+  </div>
+</div>
+
+<!-- SECTION 10 -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <h2>The Opsroom</h2>
+  </div>
+  <p>The original Cybersyn Opsroom — seven chairs in a circle, screens displaying real-time factory data, controls in the armrests — was deliberately designed for non-technical operators because Chile in 1972 couldn't staff it with specialists. That constraint no longer applies. This system's Opsroom is designed for technical superplanners, enabling deeper interrogation of AI outputs than a dashboard-only interface permits.</p>
+  <p>The workflow is as follows. MARL sector agents continuously process incoming data and generate allocation recommendations and anomaly flags. The LLM layer renders these into structured briefings for the on-duty superlanner team. Superplanners review the AI's recommendations against digital twin simulations showing projected downstream consequences. They authorise, modify, or reject. Authorised decisions push directly to enterprise terminals. Real-world outcomes flow back into the data layer, continuously retraining the MARL agents.</p>
+  <p>The Opsroom operates at multiple timescales simultaneously: monitoring real-time anomaly flags as they arrive, reviewing weekly performance-versus-target dashboards, authorising strategic reallocations at monthly intervals, and setting satisficing targets at quarterly or annual horizons. The AI handles the computational load at every timescale; humans handle authorisation and political accountability.</p>
+</div>
+
+<!-- SECTION 11 -->
+<div class="section" id="s11">
+  <div class="section-header">
+    <span class="section-num">11</span>
+    <h2>Enforcement & Deterrence</h2>
+  </div>
+  <p>Data falsification — factory managers misreporting capacity, enterprises gaming the system — is one of the two residual hard problems of this architecture. The instinct is to respond with severe penalties. The research on deterrence is precise and counterintuitive: <strong>severity of punishment is a weak deterrent; certainty of detection is the strong one.</strong></p>
+  <p>Across decades of criminology and economics research, a policy combining high probability of detection with moderate consequences outperforms one combining low detection probability with extreme punishment. When punishment severity is very high, judges and enforcers become reluctant to apply it, reducing the effective probability further — the system defeats itself.</p>
+  <p>The architecture addresses this correctly. The blockchain audit trail, real-time IoT sensor cross-referencing, and AI anomaly detection (flagging reports physically inconsistent with sensor data — a factory claiming 200% output growth while energy consumption stayed flat) together create a system where falsification is very hard to conceal. The detection probability approaches near-certainty for significant falsification. Pair this with swift, consistent, moderate consequences and the deterrence effect is maximised without the paradox of extreme punishment.</p>
+  <div class="tags">
+    <span class="tag">High detection probability</span>
+    <span class="tag">Blockchain audit trail</span>
+    <span class="tag">Cross-sensor validation</span>
+    <span class="tag">Anomaly detection AI</span>
+    <span class="tag">Swift consistent consequences</span>
+  </div>
+</div>
+
+<!-- SECTION 12 -->
+<div class="section" id="s12">
+  <div class="section-header">
+    <span class="section-num">12</span>
+    <h2>Monetary System</h2>
+  </div>
+  <p>Currency in this system is not binary — it operates as a dual-layer architecture, with different mechanisms at the planning level and the consumer level.</p>
+
+  <div class="sub">
+    <h3>Planning Layer: Physical Accounting</h3>
+    <p>At the enterprise and sectoral level, the AI does not use money. It allocates in real physical units: megawatts, tonnes of steel, labour-hours, hectares, cubic metres of water. This eliminates the distortions introduced by monetary prices at the production planning level. The MARL agents negotiate in physical terms; the digital twin models physical flows. Money is absent from the core planning mechanism by design.</p>
+  </div>
+
+  <div class="sub">
+    <h3>Consumer Layer: Digital Labor Credits</h3>
+    <p>Citizens still need a mechanism to express preferences about what they personally consume and to receive compensation for their labour. The cleanest design is a state-issued digital token — labor credits — tied to contribution and non-transferable beyond a time window, structurally preventing capital accumulation. Basic necessities (food, housing, healthcare, public transport) are provided directly by the plan. Labor credits cover discretionary consumption. The AI tracks real-time consumption patterns at the consumer layer, feeding those signals back into production plans — the feedback loop the Soviet system never closed.</p>
+  </div>
+
+  <div class="sub">
+    <h3>External Trade Layer: Convertible Currency</h3>
+    <p>The moment the economy imports or exports anything, a convertible external currency is required. The Soviet model used a special non-convertible foreign trade ruble entirely separate from the domestic passive money. This system uses the same separation: a domestic accounting unit for internal planning and a convertible instrument for external trade, with the state controlling the exchange rate between them. That exchange rate becomes a precision policy tool.</p>
+  </div>
+</div>
+
+<!-- SECTION 13 -->
+<div class="section" id="s13">
+  <div class="section-header">
+    <span class="section-num">13</span>
+    <h2>Exchange Rate as a Strategic Tool</h2>
+  </div>
+  <p>In a market economy, exchange rate manipulation is partially self-defeating because private capital flows fight back. In this command economy, there are no private currency traders. The state controls all foreign exchange transactions. The exchange rate is fully controllable — it functions as a precision lever with two primary positions and a managed transition between them.</p>
+
+  <div class="sub">
+    <h3>Overvaluation Phase (Technology Acquisition)</h3>
+    <p>Setting the external currency artificially strong — say, 1 Dinar = 2 Dollars when the real value is 1:1 — makes imports cheap in domestic terms. Foreign machinery, semiconductor equipment, industrial tooling, and technology all cost half their real price. This is the "subsidise imports of technology" mechanism: not a direct payment, but a structural price advantage delivered through currency. This phase is limited by foreign reserve stockpiles and must be managed with a hard clock on duration.</p>
+  </div>
+
+  <div class="sub">
+    <h3>Undervaluation Phase (Export Competitiveness)</h3>
+    <p>Setting the currency artificially weak makes exports cheap for foreign buyers, simultaneously making imports expensive domestically and protecting developing industries from foreign competition. An undervalued exchange rate simultaneously functions as an export subsidy and an import tax — two policy effects from a single instrument. This is what China did for decades, and what Japan, South Korea, and Taiwan all used during their development phases.</p>
+  </div>
+
+  <div class="sub">
+    <h3>The Transition: A Managed Slide</h3>
+    <p>Switching abruptly between phases creates inflationary shocks — if the economy still depends on imported inputs at the moment of transition, those inputs suddenly cost dramatically more overnight. The AI manages a controlled, pre-announced slide over 12–24 months. Sectors that have achieved domestic self-sufficiency transition first; sectors still dependent on imports receive a protected transition period. The MARL system models reserve drawdown continuously and flags when minimum reserve thresholds are approaching, triggering transition planning.</p>
+  </div>
+
+  <div class="sub">
+    <h3>Multiple Exchange Rates</h3>
+    <p>The system can operate different exchange rates for different categories simultaneously — technology imports at an overvalued rate, luxury consumer imports at an undervalued rate, strategic exports at a separate rate. This is the equivalent of a complete system of sector-specific tariffs and subsidies delivered through a single currency mechanism.</p>
+  </div>
+</div>
+
+<!-- SECTION 14 -->
+<div class="section" id="s14">
+  <div class="section-header">
+    <span class="section-num">14</span>
+    <h2>Free Trade Zones</h2>
+  </div>
+  <p>Free trade zones (FTZs) — more precisely, Special Economic Zones (SEZs) in their broadest form — are geographically bounded areas where goods can be imported, processed, and re-exported without customs intervention. They function as permeable membranes between the command economy and the global market economy: inside, market rules apply to attract foreign participation; outside, the planning system operates normally.</p>
+  <p>In the context of this system, SEZs serve three distinct functions:</p>
+  <p><strong>Technology acquisition nodes.</strong> Foreign companies bring equipment, management techniques, and organisational knowledge into bounded zones where domestic workers observe, participate, and absorb. Deng Xiaoping described China's SEZs as "social and economic laboratories where foreign technologies and managerial skills could be observed." This maps directly onto the tacit knowledge extraction programme — the SEZ is a live demonstration environment.</p>
+  <p><strong>Foreign reserve generation.</strong> Foreign companies operating in SEZs pay rent, hire local workers, and sell goods internationally — generating hard currency inflows that replenish the reserves required for the overvaluation phase. China's SEZs contributed 22% of GDP, 45% of total foreign direct investment, and 60% of exports at their peak.</p>
+  <p><strong>Policy experimentation.</strong> New industrial policies, regulatory frameworks, and currency mechanisms can be tested inside a zone before national rollout, limiting systemic risk. China first tested its negative list approach to foreign investment in the Shanghai pilot free trade zone in 2013 before national adoption.</p>
+  <p>The design principle for this system: SEZ industrial policy is set centrally by the planning AI and superplanners. Zones don't set their own strategies — they receive sector mandates from the plan and have local regulatory flexibility to attract the foreign participation that serves those mandates. The planning layer stays coherent; operational flexibility is what's delegated.</p>
+</div>
+
+<!-- SECTION 15 -->
+<div class="section" id="s15">
+  <div class="section-header">
+    <span class="section-num">15</span>
+    <h2>Industrial Strategy: Diversification, Specialisation, and the Product Space</h2>
+  </div>
+  <p>The sequence of industrial development in this system follows empirically grounded principles drawn from the Product Space framework (Hausmann and Hidalgo) and the historical record of successful industrialisation.</p>
+  <p>The empirical pattern across countries is consistent: <strong>early development requires diversification; late development allows selective specialisation.</strong> Countries that specialise early — typically in commodities — lock themselves into products whose relative value is structurally declining (the Prebisch-Singer hypothesis). The trap is not the commodity itself but the path dependence it creates.</p>
+  <p>The Product Space maps every traded product and measures relatedness based on which countries produce them together. A country's current production capabilities determine what it can produce today but also constrain what it can produce tomorrow. The AI planning system uses this map directly: it identifies where the economy currently sits and models the closest reachable products — things that don't yet exist domestically but are one capability step away.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Development Stage</th><th>AI Role</th><th>Exchange Rate</th><th>SEZ Role</th></tr></thead>
+      <tbody>
+        <tr><td>Early (far from frontier)</td><td>Map Product Space adjacencies; direct diversification</td><td>Overvalued — import technology</td><td>Technology absorption labs</td></tr>
+        <tr><td>Mid (building capability)</td><td>Identify competitive depth by sector</td><td>Transition — managed depreciation</td><td>Export orientation pilots</td></tr>
+        <tr><td>Late (near frontier)</td><td>Identify sectors for deep investment</td><td>Undervalued — export competitiveness</td><td>Frontier technology clusters</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The historical lesson from successful industrialisers — the Asian Tigers, Japan, South Korea — is that protected industries must face accountability: time-bound protection, hard expiration on state support when competitiveness benchmarks aren't met, and export-orientation as a performance signal. The AI enforces this automatically: each sector's satisficing targets include a competitiveness maturation timeline, and protection is a timed instrument that expires rather than an indefinite subsidy that breeds dependency.</p>
+</div>
+
+<!-- SECTION 16 -->
+<div class="section" id="s16">
+  <div class="section-header">
+    <span class="section-num">16</span>
+    <h2>Full Employment</h2>
+  </div>
+  <p>One of the most concrete structural advantages of this system is the near-elimination of involuntary unemployment. Market economies accept 4–6% unemployment as "full employment" because cyclical, structural, and frictional unemployment are structurally baked in. This system eliminates all three categories at scale.</p>
+  <p><strong>Cyclical unemployment</strong> — caused by demand shortfalls during recessions — disappears entirely. There are no recessions in a system where investment and production are directed rather than left to private credit cycles.</p>
+  <p><strong>Structural unemployment</strong> — caused by skill-job mismatches — is addressed by the tacit knowledge extraction programme and its companion: a continuous skill-gap analysis run by the planning AI, which identifies mismatches and routes workers into targeted training pipelines with guaranteed employment at the destination.</p>
+  <p><strong>Frictional unemployment</strong> — caused by time spent between jobs — is reduced dramatically by AI-assisted job matching. Workers don't search; the planning system matches them based on skills data.</p>
+  <p>The practical floor is approximately 1–2% — unavoidable transitions due to illness, relocation, and sector restructuring. This compares to the 5–10% that market economies routinely accept, representing an enormous pool of productive capacity unlocked.</p>
+  <div class="warn">
+    <div class="warn-label">Historical caveat</div>
+    <p>Soviet command economies achieved near-zero unemployment but at the cost of widespread underemployment — people in jobs far below their productive potential. This system addresses that specifically: the MARL labour allocation sub-function matches workers to roles based on skills data, not just job availability. The goal is not employment at any cost but productive contribution at appropriate capability levels.</p>
+  </div>
+</div>
+
+<!-- SECTION 17 -->
+<div class="section" id="s17">
+  <div class="section-header">
+    <span class="section-num">17</span>
+    <h2>Real-Time vs Five-Year Plans: A Hierarchical Architecture</h2>
+  </div>
+  <p>The Soviet five-year plan was not an ideological choice — it was a technological constraint. Five years was the optimal batch cycle given that information traveled by paper, decisions were made by committees, and there was no mechanism for real-time feedback. By the time a plan updated, conditions had changed and managers had gamed the reporting cycle.</p>
+  <p>This system operates simultaneously at four timescales, each with distinct functions:</p>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="layer-num">S</div>
+      <div>
+        <div class="layer-title">Seconds to minutes — Real-time monitoring</div>
+        <div class="layer-desc">MARL agents process every incoming data feed continuously. Production shortfalls, energy grid anomalies, logistics bottlenecks — flagged and response recommendations generated within minutes. This is the Cybersyn vision fully realised: the nervous system the original only partially built.</div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">W</div>
+      <div>
+        <div class="layer-title">Weekly to monthly — Operational review</div>
+        <div class="layer-desc">Superplanners review AI-recommended adjustments, authorise reallocations, and update sector targets based on real-world performance vs. prediction. This replaces the Soviet monthly/quarterly batch cycle with a continuous rolling review using current information.</div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">Q</div>
+      <div>
+        <div class="layer-title">Quarterly to annually — Satisficing targets</div>
+        <div class="layer-desc">The bounded goals the MARL agents optimise toward: "grow manufacturing output by 40%, complete three hospital regions, achieve energy self-sufficiency in the north by year-end." Superplanners do their most consequential work here, setting the targets from which all operational decisions derive.</div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">5+</div>
+      <div>
+        <div class="layer-title">Five to ten years — Strategic vision</div>
+        <div class="layer-desc">Long-horizon decisions: which sectors to develop, which technologies to acquire, what the exchange rate strategy should be for the next development cycle, when to graduate an industry from protection to export orientation. The five-year plan doesn't disappear — it becomes the goal-setting layer of a system that executes and adapts in real time beneath it.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 18 -->
+<div class="section" id="s18">
+  <div class="section-header">
+    <span class="section-num">18</span>
+    <h2>Transition Strategy</h2>
+  </div>
+  <p>The empirical record from post-Soviet transitions is unambiguous: the decisive variable in transition success was not the speed of reform but the <strong>strength of institutions during transition</strong>. Countries that dismantled old institutions before new ones were operational — the Soviet "shock therapy" approach — experienced catastrophic output collapses. Countries that built new institutions on top of functioning old ones — China's gradualist approach — achieved the best outcomes.</p>
+  <p>The transition sequence for this system follows the same logic:</p>
+  <p><strong>Phase 1 — Build the infrastructure.</strong> Construct the data collection network, train the MARL agents on historical economic data, build the superlanner corps, establish the Opsroom — all while the existing economy continues operating normally. Do not touch the economy yet.</p>
+  <p><strong>Phase 2 — Shadow operation.</strong> Run the system in parallel as an observation layer. Let it monitor and simulate; generate recommendations that humans can compare against what actually happens. This is how the digital twin is validated and the MARL agents are calibrated without risking the real economy.</p>
+  <p><strong>Phase 3 — Sector-by-sector handover.</strong> Beginning with sectors where the state already has high visibility — energy, heavy industry, transport infrastructure — and where top-down direction is most natural. Leave markets intact for consumer goods, agriculture, and personal services the longest.</p>
+  <p><strong>Phase 4 — Consumer layer integration.</strong> As the planning AI achieves demonstrated competence in each sector, integrate consumer-facing production. Maintain the consumer currency layer throughout; it provides the preference signals that replace market prices in the final system architecture.</p>
+  <p>The one exception to gradualism: if the pre-transition economy suffers hyperinflation, a rapid monetary stabilisation is necessary regardless. Hyperinflation is a credibility problem — gradual steps don't work because economic actors don't believe the commitment. But this applies only to monetary stabilisation, not to structural transformation.</p>
+</div>
+
+<!-- SECTION 19 -->
+<div class="section" id="s19">
+  <div class="section-header">
+    <span class="section-num">19</span>
+    <h2>Property, Class, and the Path Toward Stateless Society</h2>
+  </div>
+  <p>The Marxist framework makes a precise distinction that is commonly misunderstood. <strong>Private property</strong> in the Marxist sense refers specifically to ownership of the means of production — factories, farms, mines, machinery — used to extract surplus value from workers' labour. <strong>Personal property</strong> refers to consumer goods and goods produced or used by an individual themselves: your phone, your clothes, your house as a home rather than an investment.</p>
+  <p>The Communist Manifesto is explicit: "The distinguishing feature of communism is not the abolition of property generally, but the abolition of bourgeois property." No Marxist framework has ever proposed confiscating your toothbrush.</p>
+  <p>This system's property structure is already aligned with that distinction in practice. The means of production at scale — factories, energy infrastructure, transport networks, agricultural land — are state-owned and AI-directed. No private individual accumulates capital from owning these. Small-scale personal enterprise — a person making furniture and selling it — operates below the threshold where planning is productive and probably should not be regulated at all.</p>
+  <p>On the question of whether the state can be communist: in strict Marxist theory, communism is stateless by definition. The state is understood as an instrument of class rule — once classes are abolished, the state withers. The transitional phase is socialism, which still requires state management of the path toward communism. Every actually-existing "communist" state remained in this transitional phase indefinitely — the withering never happened.</p>
+  <div class="pull"><p>"The deepest structural question about this system is that it requires a powerful, technically sophisticated state with a monopoly on economic information. That is structurally the opposite of a state that is withering away. Whether concentrated technical power leads eventually to genuine human liberation — or merely replaces one ruling class with another — is the unresolved political problem."</p></div>
+</div>
+
+<!-- SECTION 20 -->
+<div class="section" id="s20">
+  <div class="section-header">
+    <span class="section-num">20</span>
+    <h2>Honest Assessment: What Is Established and What Remains Open</h2>
+  </div>
+
+  <div class="sub">
+    <h3>What this system genuinely solves</h3>
+    <p>The computational problem: MARL at modern scale handles the simultaneous optimisation challenge the Soviets could not. The information staleness problem: real-time data replaces batch updates. The consumer preference problem: labor credit consumption data provides real-time preference signals. The enforcement problem: high-probability detection through blockchain and anomaly detection is structurally more effective than severe punishment with low detection. The industrial development problem: the Product Space AI identifies optimal capability expansion paths that no human planner could map.</p>
+  </div>
+
+  <div class="sub">
+    <h3>What remains hard</h3>
+    <p>Tacit knowledge will never be fully extractable — there will always be a gap between what the model thinks is happening in a specific field on a specific day and what the farmer actually knows. The incentive problem transforms rather than disappears: humans still have reasons to game reporting systems, and the blockchain/anomaly detection system is a mitigation not an elimination. The satisficing target-setting itself requires human judgment that cannot be fully systematised — who decides whether 70% GDP growth is better than 50% growth with better caloric distribution is a philosophical and political question, not a technical one.</p>
+  </div>
+
+  <div class="sub">
+    <h3>What has never been done</h3>
+    <p>This system as described has never existed. The closest analogues — Cybersyn, China's hybrid model, DARPA as an innovation body — each embody fragments of it. The claim that assembling these fragments produces a coherent and functional whole is a logical inference, not an empirical result. Some interactions between components may produce failure modes not visible from the component level alone.</p>
+  </div>
+
+  <div class="sub">
+    <h3>The overall verdict</h3>
+    <p>A system of this architecture would be decisively superior to any central planning system that has ever existed, by a significant margin. For a developing country seeking maximum directed allocation power and accelerated industrial development, it represents the most capable available framework. Whether it can match a fully market economy's capacity for discovery and organisational innovation remains genuinely uncertain — but for the execution-heavy early phases of development, that gap matters less than the gap it closes on the other side.</p>
+    <p>The deepest unresolved question is political, not technical: whether a state powerful enough to run this system can be designed to serve human liberation rather than its own perpetuation. No architecture solves that problem. It requires political will, institutional design, and accountability mechanisms that the technical system can support but cannot generate.</p>
+  </div>
+
+  <div class="tags">
+    <span class="tag">MARL + LLM Architecture</span>
+    <span class="tag">Satisficing targets</span>
+    <span class="tag">Real-time + strategic planning</span>
+    <span class="tag">Dual-layer currency</span>
+    <span class="tag">Exchange rate as lever</span>
+    <span class="tag">Blockchain audit</span>
+    <span class="tag">Full employment</span>
+    <span class="tag">Product Space navigation</span>
+    <span class="tag">Gradualist transition</span>
+    <span class="tag">SEZ technology absorption</span>
+    <span class="tag">Tacit knowledge extraction</span>
+    <span class="tag">Social means of production</span>
+    <span class="tag red">Unresolved: political power</span>
+    <span class="tag amber">Open: discovery vs execution gap</span>
+  </div>
+</div>
+
+<hr class="divider">
+
+</div>
+
+<div class="footer">
+  Theoretical Framework Document · AI-Directed Technosocialist Economy · Developed through iterative reasoning and empirical research · All claims grounded in cited academic literature, historical record, and active AI research · Speculative synthesis; not empirically tested at national scale
+</div>
+
+</body>
+</html>
